@@ -8,7 +8,30 @@ import java.util.HashMap;
 import java.util.Stack;
 import java.util.Scanner;
 
-// The Game class is the driver for running the project.
+/*
+ * The Game class implements a solver for Triangle Peg Solitaire using Depth-First Search (DFS).
+ * 
+ * Algorithm: Depth-First Search (DFS)
+ * - Time Complexity: O(b^d), where b is the branching factor and d is the depth of the solution.
+ *   In this case, b varies but is bounded by the number of possible moves (max 6 per peg).
+ *   The depth d is at most the number of pegs minus 1.
+ * - Space Complexity: O(b*d) for the stack and visited set in the worst case.
+ * 
+ * DFS Characteristics in this implementation:
+ * 1. Completeness: The algorithm is complete and will find a solution if one exists, as it explores
+ *    all possible game states until a solution is found or all states are exhausted.
+ * 2. Optimality: This implementation finds a solution but not necessarily the optimal (shortest) one.
+ *    To find the optimal solution, we would need to explore all possible paths or use iterative deepening.
+ * 3. Stack usage: Utilizes a stack (via recursion) to keep track of the search path, allowing
+ *    backtracking when a path doesn't lead to a solution.
+ * 4. State space exploration: Systematically explores the game state space, going as deep as
+ *    possible along each branch before backtracking.
+ * 
+ * Memory Optimization:
+ * - HashMap for visited states: Prevents re-exploration of previously visited states, significantly
+ *   reducing the search space and avoiding cycles in the state graph.
+ * - Trade-off: Increased memory usage for faster execution and cycle prevention.
+ */
 public class Game {
  
  int numMoves;
@@ -23,12 +46,25 @@ public class Game {
   this(0,new Board());
  }
  
- // DFS
+ /*
+     * Implements the Depth-First Search algorithm to find a solution for the Triangle Peg Solitaire game.
+     * 
+     * DFS Strategy:
+     * 1. Initialize: Start with the initial game state (user-selected peg removed).
+     * 2. Exploration: For each game state, explore all possible moves (up to 6 per peg).
+     * 3. State Management: Use a stack to manage the frontier of unexplored states.
+     * 4. Cycle Prevention: Maintain a set of visited states to avoid revisiting.
+     * 5. Goal Check: Continually check if the current state is a winning state (1 peg left).
+     * 6. Backtracking: Implicitly backtrack by popping states off the stack when a path is exhausted.
+     * 7. Solution Reconstruction: When a solution is found, reconstruct the path using the visited map.
+     * 
+     * @return ArrayList<PegMove> representing the sequence of moves to solve the game
+     */
  public static ArrayList<PegMove> playGame(){
   ArrayList<PegMove> bestMoves = new ArrayList<PegMove>();
   Game bestGame;
-  Stack<Game> states  = new Stack<Game>();
-  HashMap<Game,PegMove> visited = new HashMap<Game,PegMove>(); 
+  Stack<Game> states  = new Stack<Game>(); // Frontier for DFS
+  HashMap<Game,PegMove> visited = new HashMap<Game,PegMove>(); // Visited states and their predecessors
   Game initial = new Game(0,new Board());
   
    int peg;
@@ -153,6 +189,10 @@ public class Game {
   return this.numMoves;
  }
  
+ /*
+  * Overrides the equals method to compare Game objects.
+  * Two Game objects are considered equal if they have the same board state and number of moves.
+  */
  public boolean equals(Object o){
   if((this.board.equals(((Game)o).board)) && (this.numMoves == ((Game)o).numMoves)){
    return true;
@@ -160,6 +200,10 @@ public class Game {
  return false;
  }
  
+ /*
+  * Creates a deep copy of the Game object.
+  * This is crucial for the DFS algorithm to explore different game states without modifying the original.
+  */
  public Game copy(){
   Game g2 = new Game();
   g2.board = this.board.copy();
