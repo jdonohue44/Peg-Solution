@@ -202,7 +202,7 @@ public class Game {
  
  /*
   * Creates a deep copy of the Game object.
-  * This is crucial for the DFS algorithm to explore different game states without modifying the original.
+  * Allows the DFS algorithm to explore different game states without modifying the original.
   */
  public Game copy(){
   Game g2 = new Game();
@@ -212,15 +212,22 @@ public class Game {
  }
  
   public static void main(String[] args){
-  Game g = new Game(0, new Board());
-  ArrayList<PegMove> moves  = new ArrayList<PegMove>();
-  System.out.println(g.board);
-  moves = playGame();
+	Game g = new Game(0, new Board());
+	ArrayList<PegMove> moves;
+	System.out.println(g.board);
+	moves = playGame();
 
-  System.out.print("\nmove peg " + moves.get(moves.size()-1) + ",");
-  for(int i = moves.size()-2; i > 0; i--){
-   System.out.print(" move peg " + moves.get(i) + ",");
-  }
-  System.out.println("move peg " + moves.get(0) + ".\n\nWIN GAME.");
- }
+	if (moves.isEmpty()) {
+		System.out.println("No solution found.");
+	} else {
+		System.out.print("\nSolution found. Moves: ");
+		for (int i = moves.size() - 1; i >= 0; i--) {
+			System.out.print("move peg " + moves.get(i));
+			if (i > 0) {
+				System.out.print(", ");
+			}
+		}
+		System.out.println(".\n\nWIN GAME.");
+	}
+}
 }

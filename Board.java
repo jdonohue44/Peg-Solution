@@ -19,6 +19,12 @@ public class Board{
     *   X X X X   pegs[6,7,8,9]
     *  X X X X X  pegs[10,11,12,13,14]
     */
+
+  //             1
+  //          2     3
+  //       4     5     6
+  //     7     8     9    10
+  //  11   12    13    14    15
    
    //first row pointers 
    pegs[0].SW = pegs[1];
@@ -45,8 +51,8 @@ public class Board{
    pegs[4].NW = pegs[1];
    pegs[4].NE = pegs[2];
    pegs[4].E  = pegs[5];
-   pegs[4].SE = pegs[5];
-   pegs[4].SW = pegs[4];
+   pegs[4].SE = pegs[8];
+   pegs[4].SW = pegs[7];
    pegs[4].W  = pegs[3];
    
    pegs[5].NW = pegs[2];
