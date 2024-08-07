@@ -15,7 +15,9 @@ import java.util.Scanner;
  * - Time Complexity: O(b^d), where b is the branching factor and d is the depth of the solution.
  *   In this case, b varies but is bounded by the number of possible moves (max 6 per peg).
  *   The depth d is at most the number of pegs minus 1.
- * - Space Complexity: O(b*d) for the stack and visited set in the worst case.
+ * - Space Complexity: O(b^d) worst case due to visited hash map.
+ *   - Stack space: In the worst case, the stack can grow to the full depth of the search, which is O(d).
+ *   - Visited set: The visited hash map can potentially store all unique game states. In the worst case, this could be close to the total number of possible game states, which is O(b^d).
  * 
  * DFS Characteristics in this implementation:
  * 1. Completeness: The algorithm is complete and will find a solution if one exists, as it explores
